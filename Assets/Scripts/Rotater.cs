@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Rotater : MonoBehaviour
 {
-
+    public string powerupType;
 
     // Update is called once per frame
     void Update()
