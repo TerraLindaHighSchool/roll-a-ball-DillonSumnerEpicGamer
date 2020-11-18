@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
     private float movementX;
     private float movementY;
-    private float jump;
+    private bool isJumping = false;
 
     // Start is called before the first frame update
     void Start()
@@ -54,9 +54,16 @@ public class PlayerController : MonoBehaviour
         movementX = movementVector.x;
         movementY = movementVector.y;
     }
-    void OnJump(InputValue jumpValue)
+
+    void OnJump()
     {
-       
+        if (!isJumping)
+        {
+            Vector3 jump = new Vector3(0.0f, 300.0f, 0.0f);
+            rb.AddForce(jump);
+            isJumping = true;
+            Invoke("resetJump", 2);
+        }
     }
 
     void SetCountText()
@@ -71,7 +78,7 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
 
-        Vector3 movement = new Vector3(movementX, jump, movementY);
+        Vector3 movement = new Vector3(movementX, 0f, movementY);
 
         rb.AddForce(movement*speed);
         
@@ -92,7 +99,9 @@ public class PlayerController : MonoBehaviour
                     resetEffects();
                     lavaController.speed = 0.0025f;
                     break;
-                default: break;
+                default:
+                    resetEffects();
+                    break;
             }
             effectsText.text = rotater.powerupType;
             other.gameObject.SetActive(false);
@@ -111,6 +120,11 @@ public class PlayerController : MonoBehaviour
         transform.position = new Vector3(0, 0.5f, 0);
         losses++;
         lavaController.reset();
+    }
+
+    void resetJump()
+    {
+        isJumping = false;
     }
 
     void resetEffects()
