@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
     private float movementX;
     private float movementY;
     private bool isJumping = false;
+    private float jumpAmmount = 300.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -59,7 +60,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!isJumping)
         {
-            Vector3 jump = new Vector3(0.0f, 300.0f, 0.0f);
+            Vector3 jump = new Vector3(0.0f, jumpAmmount, 0.0f);
             rb.AddForce(jump);
             isJumping = true;
             Invoke("resetJump", 2);
@@ -99,6 +100,10 @@ public class PlayerController : MonoBehaviour
                     resetEffects();
                     lavaController.speed = 0.0025f;
                     break;
+                case "highJump":
+                    resetEffects();
+                    jumpAmmount = 500.0f;
+                    break;
                 default:
                     resetEffects();
                     break;
@@ -130,6 +135,7 @@ public class PlayerController : MonoBehaviour
     void resetEffects()
     {
         speed = 10;
+        jumpAmmount = 300.0f;
         lavaController.speed = 0.005f;
     }
 }
