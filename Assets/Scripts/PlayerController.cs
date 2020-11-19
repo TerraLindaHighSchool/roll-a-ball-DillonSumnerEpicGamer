@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     public TextMeshProUGUI effectsText;
     public TextMeshProUGUI lossText;
     public GameObject lavaPlane;
+   
     public Transform pickupableHolder;
     private LavaController lavaController;
 
@@ -117,6 +118,12 @@ public class PlayerController : MonoBehaviour
         {
             Invoke("resetGame", 2);
 
+        }
+        else if (other.gameObject.CompareTag("Finish"))
+        {
+            losses = losses - 2;
+            lavaController.speed = 0;
+            Invoke("resetGame",2);
         }
     }
 
